@@ -538,65 +538,79 @@ Lable 7: -825
   40121d:	e8 0d 05 00 00       	callq  40172f <read_six_numbers>
   401222:	bd 00 00 00 00       	mov    $0x0,%ebp
   401227:	eb 3a                	jmp    401263 <phase_6+0x61>
-  401229:	48 63 c5             	movslq %ebp,%rax
-  40122c:	8b 04 84             	mov    (%rsp,%rax,4),%eax
-  40122f:	83 e8 01             	sub    $0x1,%eax
-  401232:	83 f8 05             	cmp    $0x5,%eax
-  401235:	76 05                	jbe    40123c <phase_6+0x3a>
-  401237:	e8 bd 04 00 00       	callq  4016f9 <explode_bomb>
-  40123c:	44 8d 65 01          	lea    0x1(%rbp),%r12d
-  401240:	44 89 e3             	mov    %r12d,%ebx
-  401243:	eb 16                	jmp    40125b <phase_6+0x59>
-  401245:	48 63 c5             	movslq %ebp,%rax
-  401248:	48 63 d3             	movslq %ebx,%rdx
-  40124b:	8b 3c 94             	mov    (%rsp,%rdx,4),%edi
-  40124e:	39 3c 84             	cmp    %edi,(%rsp,%rax,4)
-  401251:	75 05                	jne    401258 <phase_6+0x56>
-  401253:	e8 a1 04 00 00       	callq  4016f9 <explode_bomb>
-  401258:	83 c3 01             	add    $0x1,%ebx
-  40125b:	83 fb 05             	cmp    $0x5,%ebx
-  40125e:	7e e5                	jle    401245 <phase_6+0x43>
-  401260:	44 89 e5             	mov    %r12d,%ebp
-  401263:	83 fd 05             	cmp    $0x5,%ebp
-  401266:	7e c1                	jle    401229 <phase_6+0x27>
+
+判断 数据范围 和 数据是否重复
+	  401229:	48 63 c5             	movslq %ebp,%rax
+	  40122c:	8b 04 84             	mov    (%rsp,%rax,4),%eax
+	  40122f:	83 e8 01             	sub    $0x1,%eax
+	  401232:	83 f8 05             	cmp    $0x5,%eax
+	  401235:	76 05                	jbe    40123c <phase_6+0x3a>
+	  401237:	e8 bd 04 00 00       	callq  4016f9 <explode_bomb>
+	  40123c:	44 8d 65 01          	lea    0x1(%rbp),%r12d
+	  401240:	44 89 e3             	mov    %r12d,%ebx
+	  401243:	eb 16                	jmp    40125b <phase_6+0x59>
+
+		  401245:	48 63 c5             	movslq %ebp,%rax
+		  401248:	48 63 d3             	movslq %ebx,%rdx
+		  40124b:	8b 3c 94             	mov    (%rsp,%rdx,4),%edi
+		  40124e:	39 3c 84             	cmp    %edi,(%rsp,%rax,4)
+		  401251:	75 05                	jne    401258 <phase_6+0x56>
+		  401253:	e8 a1 04 00 00       	callq  4016f9 <explode_bomb>
+		  401258:	83 c3 01             	add    $0x1,%ebx
+		  40125b:	83 fb 05             	cmp    $0x5,%ebx
+		  40125e:	7e e5                	jle    401245 <phase_6+0x43>
+
+	  401260:	44 89 e5             	mov    %r12d,%ebp
+	  401263:	83 fd 05             	cmp    $0x5,%ebp
+	  401266:	7e c1                	jle    401229 <phase_6+0x27>
+
+插入数字在num数组后端
   401268:	be 00 00 00 00       	mov    $0x0,%esi
   40126d:	eb 23                	jmp    401292 <phase_6+0x90>
-  40126f:	48 8b 52 08          	mov    0x8(%rdx),%rdx
-  401273:	83 c0 01             	add    $0x1,%eax
-  401276:	eb 0a                	jmp    401282 <phase_6+0x80>
-  401278:	b8 01 00 00 00       	mov    $0x1,%eax
-  40127d:	ba 00 43 60 00       	mov    $0x604300,%edx
-  401282:	48 63 ce             	movslq %esi,%rcx
-  401285:	3b 04 8c             	cmp    (%rsp,%rcx,4),%eax
-  401288:	7c e5                	jl     40126f <phase_6+0x6d>
-  40128a:	48 89 54 cc 20       	mov    %rdx,0x20(%rsp,%rcx,8)
-  40128f:	83 c6 01             	add    $0x1,%esi
-  401292:	83 fe 05             	cmp    $0x5,%esi
-  401295:	7e e1                	jle    401278 <phase_6+0x76>
+
+	  40126f:	48 8b 52 08          	mov    0x8(%rdx),%rdx
+	  401273:	83 c0 01             	add    $0x1,%eax
+	  401276:	eb 0a                	jmp    401282 <phase_6+0x80>
+	  401278:	b8 01 00 00 00       	mov    $0x1,%eax
+	  40127d:	ba 00 43 60 00       	mov    $0x604300,%edx
+	  401282:	48 63 ce             	movslq %esi,%rcx
+	  401285:	3b 04 8c             	cmp    (%rsp,%rcx,4),%eax
+	  401288:	7c e5                	jl     40126f <phase_6+0x6d>
+	  40128a:	48 89 54 cc 20       	mov    %rdx,0x20(%rsp,%rcx,8)
+	  40128f:	83 c6 01             	add    $0x1,%esi
+	  401292:	83 fe 05             	cmp    $0x5,%esi
+	  401295:	7e e1                	jle    401278 <phase_6+0x76>
+
+链表操作
   401297:	48 8b 5c 24 20       	mov    0x20(%rsp),%rbx
   40129c:	48 89 d9             	mov    %rbx,%rcx
   40129f:	b8 01 00 00 00       	mov    $0x1,%eax
   4012a4:	eb 12                	jmp    4012b8 <phase_6+0xb6>
-  4012a6:	48 63 d0             	movslq %eax,%rdx
-  4012a9:	48 8b 54 d4 20       	mov    0x20(%rsp,%rdx,8),%rdx
-  4012ae:	48 89 51 08          	mov    %rdx,0x8(%rcx)
-  4012b2:	83 c0 01             	add    $0x1,%eax
-  4012b5:	48 89 d1             	mov    %rdx,%rcx
-  4012b8:	83 f8 05             	cmp    $0x5,%eax
-  4012bb:	7e e9                	jle    4012a6 <phase_6+0xa4>
+
+	  4012a6:	48 63 d0             	movslq %eax,%rdx
+	  4012a9:	48 8b 54 d4 20       	mov    0x20(%rsp,%rdx,8),%rdx
+	  4012ae:	48 89 51 08          	mov    %rdx,0x8(%rcx)
+	  4012b2:	83 c0 01             	add    $0x1,%eax
+	  4012b5:	48 89 d1             	mov    %rdx,%rcx
+	  4012b8:	83 f8 05             	cmp    $0x5,%eax
+	  4012bb:	7e e9                	jle    4012a6 <phase_6+0xa4>
+
+检查是否排序完毕	  
   4012bd:	48 c7 41 08 00 00 00 	movq   $0x0,0x8(%rcx)
   4012c4:	00 
   4012c5:	bd 00 00 00 00       	mov    $0x0,%ebp
   4012ca:	eb 16                	jmp    4012e2 <phase_6+0xe0>
-  4012cc:	48 8b 43 08          	mov    0x8(%rbx),%rax
-  4012d0:	8b 00                	mov    (%rax),%eax
-  4012d2:	39 03                	cmp    %eax,(%rbx)
-  4012d4:	7e 05                	jle    4012db <phase_6+0xd9>
-  4012d6:	e8 1e 04 00 00       	callq  4016f9 <explode_bomb>
-  4012db:	48 8b 5b 08          	mov    0x8(%rbx),%rbx
-  4012df:	83 c5 01             	add    $0x1,%ebp
-  4012e2:	83 fd 04             	cmp    $0x4,%ebp
-  4012e5:	7e e5                	jle    4012cc <phase_6+0xca>
+
+	  4012cc:	48 8b 43 08          	mov    0x8(%rbx),%rax
+	  4012d0:	8b 00                	mov    (%rax),%eax
+	  4012d2:	39 03                	cmp    %eax,(%rbx)
+	  4012d4:	7e 05                	jle    4012db <phase_6+0xd9>
+	  4012d6:	e8 1e 04 00 00       	callq  4016f9 <explode_bomb>
+	  4012db:	48 8b 5b 08          	mov    0x8(%rbx),%rbx
+	  4012df:	83 c5 01             	add    $0x1,%ebp
+	  4012e2:	83 fd 04             	cmp    $0x4,%ebp
+	  4012e5:	7e e5                	jle    4012cc <phase_6+0xca>
+
   4012e7:	48 8b 44 24 58       	mov    0x58(%rsp),%rax
   4012ec:	64 48 33 04 25 28 00 	xor    %fs:0x28,%rax
   4012f3:	00 00 
@@ -610,23 +624,29 @@ Lable 7: -825
 
 0000000000401305 <fun7>:
   401305:	48 83 ec 08          	sub    $0x8,%rsp
+
   401309:	48 85 ff             	test   %rdi,%rdi
   40130c:	74 26                	je     401334 <fun7+0x2f>
   40130e:	8b 07                	mov    (%rdi),%eax
   401310:	39 f0                	cmp    %esi,%eax
   401312:	7e 0d                	jle    401321 <fun7+0x1c>
-  401314:	48 8b 7f 08          	mov    0x8(%rdi),%rdi
-  401318:	e8 e8 ff ff ff       	callq  401305 <fun7>
-  40131d:	01 c0                	add    %eax,%eax
-  40131f:	eb 1f                	jmp    401340 <fun7+0x3b>
+大于
+	  401314:	48 8b 7f 08          	mov    0x8(%rdi),%rdi
+	  401318:	e8 e8 ff ff ff       	callq  401305 <fun7>
+	  40131d:	01 c0                	add    %eax,%eax
+	  40131f:	eb 1f                	jmp    401340 <fun7+0x3b>
+  
   401321:	39 f0                	cmp    %esi,%eax
   401323:	74 16                	je     40133b <fun7+0x36>
-  401325:	48 8b 7f 10          	mov    0x10(%rdi),%rdi
-  401329:	e8 d7 ff ff ff       	callq  401305 <fun7>
-  40132e:	8d 44 00 01          	lea    0x1(%rax,%rax,1),%eax
-  401332:	eb 0c                	jmp    401340 <fun7+0x3b>
-  401334:	b8 ff ff ff ff       	mov    $0xffffffff,%eax
-  401339:	eb 05                	jmp    401340 <fun7+0x3b>
+小于
+	  401325:	48 8b 7f 10          	mov    0x10(%rdi),%rdi
+	  401329:	e8 d7 ff ff ff       	callq  401305 <fun7>
+	  40132e:	8d 44 00 01          	lea    0x1(%rax,%rax,1),%eax
+	  401332:	eb 0c                	jmp    401340 <fun7+0x3b>
+
+	  401334:	b8 ff ff ff ff       	mov    $0xffffffff,%eax
+	  401339:	eb 05                	jmp    401340 <fun7+0x3b>
+
   40133b:	b8 00 00 00 00       	mov    $0x0,%eax
   401340:	48 83 c4 08          	add    $0x8,%rsp
   401344:	c3                   	retq   
