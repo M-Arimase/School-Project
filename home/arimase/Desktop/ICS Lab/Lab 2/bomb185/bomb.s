@@ -395,26 +395,34 @@ Disassembly of section .text:
   401074:	77 65                	ja     4010db <phase_3+0x9b>
   401076:	8b 04 24             	mov    (%rsp),%eax
   401079:	ff 24 c5 80 28 40 00 	jmpq   *0x402880(,%rax,8)
+Lable 1: -441
   401080:	b8 00 00 00 00       	mov    $0x0,%eax
   401085:	eb 05                	jmp    40108c <phase_3+0x4c>
+Lable 0:  449
   401087:	b8 7a 03 00 00       	mov    $0x37a,%eax
   40108c:	2d 15 02 00 00       	sub    $0x215,%eax
   401091:	eb 05                	jmp    401098 <phase_3+0x58>
+Lable 2:   92
   401093:	b8 00 00 00 00       	mov    $0x0,%eax
   401098:	05 95 03 00 00       	add    $0x395,%eax
   40109d:	eb 05                	jmp    4010a4 <phase_3+0x64>
+Lable 3: -825
   40109f:	b8 00 00 00 00       	mov    $0x0,%eax
   4010a4:	2d 39 03 00 00       	sub    $0x339,%eax
   4010a9:	eb 05                	jmp    4010b0 <phase_3+0x70>
+Lable 4:    0
   4010ab:	b8 00 00 00 00       	mov    $0x0,%eax
   4010b0:	05 39 03 00 00       	add    $0x339,%eax
   4010b5:	eb 05                	jmp    4010bc <phase_3+0x7c>
+Lable 5: -825
   4010b7:	b8 00 00 00 00       	mov    $0x0,%eax
   4010bc:	2d 39 03 00 00       	sub    $0x339,%eax
   4010c1:	eb 05                	jmp    4010c8 <phase_3+0x88>
+Lable 6:    0
   4010c3:	b8 00 00 00 00       	mov    $0x0,%eax
   4010c8:	05 39 03 00 00       	add    $0x339,%eax
   4010cd:	eb 05                	jmp    4010d4 <phase_3+0x94>
+Lable 7: -825
   4010cf:	b8 00 00 00 00       	mov    $0x0,%eax
   4010d4:	2d 39 03 00 00       	sub    $0x339,%eax
   4010d9:	eb 0a                	jmp    4010e5 <phase_3+0xa5>
@@ -433,6 +441,7 @@ Disassembly of section .text:
   40110b:	48 83 c4 18          	add    $0x18,%rsp
   40110f:	c3                   	retq   
 
+中序遍历 从当前节点到根节点的数字之和
 0000000000401110 <func4>:
   401110:	53                   	push   %rbx
   401111:	89 d0                	mov    %edx,%eax
@@ -715,7 +724,7 @@ Disassembly of section .text:
   401472:	c3                   	retq   
 
 0000000000401473 <initialize_bomb>:
-  401473:	53                   	push   %rbx
+  401473:	c3                   	retq   
   401474:	48 81 ec 50 20 00 00 	sub    $0x2050,%rsp
   40147b:	64 48 8b 04 25 28 00 	mov    %fs:0x28,%rax
   401482:	00 00 
@@ -824,7 +833,8 @@ Disassembly of section .text:
   4015e0:	c3                   	retq   
 
 00000000004015e1 <send_msg>:
-  4015e1:	48 81 ec 18 40 00 00 	sub    $0x4018,%rsp
+  4015e1:	c3                   	retq   
+  4015e2:	81 ec 18 40 00 00    	sub    $0x4018,%esp
   4015e8:	41 89 f8             	mov    %edi,%r8d
   4015eb:	64 48 8b 04 25 28 00 	mov    %fs:0x28,%rax
   4015f2:	00 00 
@@ -893,7 +903,8 @@ Disassembly of section .text:
   4016f8:	c3                   	retq   
 
 00000000004016f9 <explode_bomb>:
-  4016f9:	48 83 ec 08          	sub    $0x8,%rsp
+  4016f9:	c3                   	retq   
+  4016fa:	83 ec 08             	sub    $0x8,%esp
   4016fd:	bf 24 2b 40 00       	mov    $0x402b24,%edi
   401702:	e8 d9 f4 ff ff       	callq  400be0 <puts@plt>
   401707:	bf 2d 2b 40 00       	mov    $0x402b2d,%edi
