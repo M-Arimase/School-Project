@@ -1,0 +1,19 @@
+826 00000000004015e1 <send_msg>:
+
+717 0000000000401473 <initialize_bomb>:
+
+{
+	333 0000000000400fad <phase_1>:
+
+	687 0000000000401426 <strings_not_equal>:
+
+	Ans: {
+		When I get angry, Mr.Bigglesworth gets upset.
+	}
+}
+
+{
+	343 0000000000400fc9 <phase_2>:
+
+	908 000000000040172f <read_six_numbers>:
+}
