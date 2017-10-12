@@ -1,4 +1,0 @@
-self-repair.mozilla.org:HPKP	0	17431	1506132355199,1,0,WoiWRyIOVNa9ihaBciRSC7XHjliYS9VwUGOIud4PB18=r/mIkG3eEpVdm+u/ko/cwxzOMo1bk4TyHIlByibiA5E=YLh1dUR9y6Kja30RrAn7JKnbQG/uEtLMkBgFF2Fuihg=sRHdihwgkaib1P1gxX8HFszlD+7/gTfNvuAybgLPNis=
-aus5.mozilla.org:HSTS	0	17431	1537581796580,1,0
-self-repair.mozilla.org:HSTS	0	17431	1537581955198,1,1
-shavar.services.mozilla.com^firstPartyDomain=safebrowsing.86868755-6b82-4842-b301-72671a0db32e.mozilla:HSTS	0	17431	1537581614544,1,1
