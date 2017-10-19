@@ -1,5 +1,5 @@
-#include <iostream>
 #include <algorithm>
+#include <iostream>
 
 using namespace std;
 
@@ -9,35 +9,36 @@ int sum[MAXN], ans[MAXN];
 pair<int, int> p[MAXN];
 
 void Insert(int x) {
-	for (; x < MAXN; x += x & -x)
-		sum[x]++;
+        for (; x < MAXN; x += x & -x)
+                sum[x]++;
 }
 
 int Query(int x) {
-	int res = 0;
-	for (; x; x -= x & -x)
-		res += sum[x];
-	return res;
+        int res = 0;
+        for (; x; x -= x & -x)
+                res += sum[x];
+        return res;
 }
 
 int main() {
-	int n; scanf("%d", &n);
+        int n;
+        scanf("%d", &n);
 
-	for (int i = 0; i < n; i++) {
-		scanf("%d%d", &p[i].first, &p[i].second);
-		p[i].first += 1;
-		p[i].second += 1;
-	}
+        for (int i = 0; i < n; i++) {
+                scanf("%d%d", &p[i].first, &p[i].second);
+                p[i].first += 1;
+                p[i].second += 1;
+        }
 
-	sort(p, p + n);
+        sort(p, p + n);
 
-	for (int i = 0; i < n; i++) {
-		ans[Query(p[i].second)]++;
-		Insert(p[i].second);
-	}
+        for (int i = 0; i < n; i++) {
+                ans[Query(p[i].second)]++;
+                Insert(p[i].second);
+        }
 
-	for (int i = 0; i < n; i++)
-		printf("%d\n", ans[i]);
+        for (int i = 0; i < n; i++)
+                printf("%d\n", ans[i]);
 
-	return 0;
+        return 0;
 }
