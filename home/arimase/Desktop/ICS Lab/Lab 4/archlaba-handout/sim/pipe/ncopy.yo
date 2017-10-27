@@ -1,0 +1,271 @@
+                      | #/* $begin ncopy-ys */
+                      | ##################################################################
+                      | # ncopy.ys - Copy a src block of len ints to dst.
+                      | # Return the number of positive ints (>0) contained in src.
+                      | #
+                      | # Include your name and ID here.
+                      | #
+                      | # Describe how and why you modified the baseline code.
+                      | #
+                      | ##################################################################
+                      | # Do not modify this portion
+                      | # Function prologue.
+  0x000: a05f         | ncopy:	pushl %ebp		# Save old frame pointer
+  0x002: 2045         | 	rrmovl %esp,%ebp	# Set up new frame pointer
+  0x004: a06f         | 	pushl %esi		# Save callee-save regs
+  0x006: a03f         | 	pushl %ebx
+  0x008: a07f         | 	pushl %edi
+  0x00a: 503508000000 | 	mrmovl 8(%ebp),%ebx	# src
+  0x010: 502510000000 | 	mrmovl 16(%ebp),%edx	# len
+  0x016: 50150c000000 | 	mrmovl 12(%ebp),%ecx	# dst
+                      | 
+                      | ##################################################################
+                      | # You can modify this portion
+                      | 	# Loop header
+  0x01c: 6300         | 	xorl %eax,%eax		# count = 0;
+  0x01e: 6222         | 	andl %edx,%edx		# len <= 0?
+                      | 
+  0x020: 506300000000 | 	mrmovl (%ebx), %esi	# read val from src...
+                      | 
+  0x026: 7154030000   | 	jle Done		# if so, goto Done:
+                      | 
+  0x02b:              | Loop:	
+                      | 
+  0x02b: 406100000000 | 	rmmovl %esi, (%ecx)	# ...and store it to dst
+  0x031: 6266         | 	andl %esi, %esi		# val <= 0?
+  0x033: 713e000000   | 	jle Npos_1		# if so, goto Npos:
+  0x038: c0f001000000 | 	iaddl $1, %eax		# count++
+  0x03e:              | Npos_1:	
+  0x03e: 506304000000 | 	mrmovl 4(%ebx), %esi	# read val from src...
+  0x044: c0f2ffffffff | 	iaddl $-1, %edx		# len--
+  0x04a: 7154030000   | 	jle Done		# if so, goto Loop:
+                      | 
+                      | 
+  0x04f: 406104000000 | 	rmmovl %esi, 4(%ecx)	# ...and store it to dst
+  0x055: 6266         | 	andl %esi, %esi		# val <= 0?
+  0x057: 7162000000   | 	jle Npos_2		# if so, goto Npos:
+  0x05c: c0f001000000 | 	iaddl $1, %eax		# count++
+  0x062:              | Npos_2:	
+  0x062: 506308000000 | 	mrmovl 8(%ebx), %esi	# read val from src...
+  0x068: c0f2ffffffff | 	iaddl $-1, %edx		# len--
+  0x06e: 7154030000   | 	jle Done		# if so, goto Loop:
+                      | 
+                      | 
+  0x073: 406108000000 | 	rmmovl %esi, 8(%ecx)	# ...and store it to dst
+  0x079: 6266         | 	andl %esi, %esi		# val <= 0?
+  0x07b: 7186000000   | 	jle Npos_3		# if so, goto Npos:
+  0x080: c0f001000000 | 	iaddl $1, %eax		# count++
+  0x086:              | Npos_3:	
+  0x086: 50630c000000 | 	mrmovl 12(%ebx), %esi	# read val from src...
+  0x08c: c0f2ffffffff | 	iaddl $-1, %edx		# len--
+  0x092: 7154030000   | 	jle Done		# if so, goto Loop:
+                      | 
+                      | 
+  0x097: 40610c000000 | 	rmmovl %esi, 12(%ecx)	# ...and store it to dst
+  0x09d: 6266         | 	andl %esi, %esi		# val <= 0?
+  0x09f: 71aa000000   | 	jle Npos_4		# if so, goto Npos:
+  0x0a4: c0f001000000 | 	iaddl $1, %eax		# count++
+  0x0aa:              | Npos_4:	
+  0x0aa: 506310000000 | 	mrmovl 16(%ebx), %esi	# read val from src...
+  0x0b0: c0f2ffffffff | 	iaddl $-1, %edx		# len--
+  0x0b6: 7154030000   | 	jle Done		# if so, goto Loop:
+                      | 
+                      | 
+  0x0bb: 406110000000 | 	rmmovl %esi, 16(%ecx)	# ...and store it to dst
+  0x0c1: 6266         | 	andl %esi, %esi		# val <= 0?
+  0x0c3: 71ce000000   | 	jle Npos_5		# if so, goto Npos:
+  0x0c8: c0f001000000 | 	iaddl $1, %eax		# count++
+  0x0ce:              | Npos_5:	
+  0x0ce: 506314000000 | 	mrmovl 20(%ebx), %esi	# read val from src...
+  0x0d4: c0f2ffffffff | 	iaddl $-1, %edx		# len--
+  0x0da: 7154030000   | 	jle Done		# if so, goto Loop:
+                      | 
+                      | 
+  0x0df: 406114000000 | 	rmmovl %esi, 20(%ecx)	# ...and store it to dst
+  0x0e5: 6266         | 	andl %esi, %esi		# val <= 0?
+  0x0e7: 71f2000000   | 	jle Npos_6		# if so, goto Npos:
+  0x0ec: c0f001000000 | 	iaddl $1, %eax		# count++
+  0x0f2:              | Npos_6:	
+  0x0f2: 506318000000 | 	mrmovl 24(%ebx), %esi	# read val from src...
+  0x0f8: c0f2ffffffff | 	iaddl $-1, %edx		# len--
+  0x0fe: 7154030000   | 	jle Done		# if so, goto Loop:
+                      | 
+                      | 
+  0x103: 406118000000 | 	rmmovl %esi, 24(%ecx)	# ...and store it to dst
+  0x109: 6266         | 	andl %esi, %esi		# val <= 0?
+  0x10b: 7116010000   | 	jle Npos_7		# if so, goto Npos:
+  0x110: c0f001000000 | 	iaddl $1, %eax		# count++
+  0x116:              | Npos_7:	
+  0x116: 50631c000000 | 	mrmovl 28(%ebx), %esi	# read val from src...
+  0x11c: c0f2ffffffff | 	iaddl $-1, %edx		# len--
+  0x122: 7154030000   | 	jle Done		# if so, goto Loop:
+                      | 
+                      | 
+  0x127: 40611c000000 | 	rmmovl %esi, 28(%ecx)	# ...and store it to dst
+  0x12d: 6266         | 	andl %esi, %esi		# val <= 0?
+  0x12f: 713a010000   | 	jle Npos_8		# if so, goto Npos:
+  0x134: c0f001000000 | 	iaddl $1, %eax		# count++
+  0x13a:              | Npos_8:	
+  0x13a: 506320000000 | 	mrmovl 32(%ebx), %esi	# read val from src...
+  0x140: c0f2ffffffff | 	iaddl $-1, %edx		# len--
+  0x146: 7154030000   | 	jle Done		# if so, goto Loop:
+                      | 
+                      | 
+  0x14b: 406120000000 | 	rmmovl %esi, 32(%ecx)	# ...and store it to dst
+  0x151: 6266         | 	andl %esi, %esi		# val <= 0?
+  0x153: 715e010000   | 	jle Npos_9		# if so, goto Npos:
+  0x158: c0f001000000 | 	iaddl $1, %eax		# count++
+  0x15e:              | Npos_9:	
+  0x15e: 506324000000 | 	mrmovl 36(%ebx), %esi	# read val from src...
+  0x164: c0f2ffffffff | 	iaddl $-1, %edx		# len--
+  0x16a: 7154030000   | 	jle Done		# if so, goto Loop:
+                      | 
+                      | 
+  0x16f: 406124000000 | 	rmmovl %esi, 36(%ecx)	# ...and store it to dst
+  0x175: 6266         | 	andl %esi, %esi		# val <= 0?
+  0x177: 7182010000   | 	jle Npos_10		# if so, goto Npos:
+  0x17c: c0f001000000 | 	iaddl $1, %eax		# count++
+  0x182:              | Npos_10:	
+  0x182: 506328000000 | 	mrmovl 40(%ebx), %esi	# read val from src...
+  0x188: c0f2ffffffff | 	iaddl $-1, %edx		# len--
+  0x18e: 7154030000   | 	jle Done		# if so, goto Loop:
+                      | 
+                      | 
+  0x193: 406128000000 | 	rmmovl %esi, 40(%ecx)	# ...and store it to dst
+  0x199: 6266         | 	andl %esi, %esi		# val <= 0?
+  0x19b: 71a6010000   | 	jle Npos_11		# if so, goto Npos:
+  0x1a0: c0f001000000 | 	iaddl $1, %eax		# count++
+  0x1a6:              | Npos_11:	
+  0x1a6: 50632c000000 | 	mrmovl 44(%ebx), %esi	# read val from src...
+  0x1ac: c0f2ffffffff | 	iaddl $-1, %edx		# len--
+  0x1b2: 7154030000   | 	jle Done		# if so, goto Loop:
+                      | 
+                      | 
+  0x1b7: 40612c000000 | 	rmmovl %esi, 44(%ecx)	# ...and store it to dst
+  0x1bd: 6266         | 	andl %esi, %esi		# val <= 0?
+  0x1bf: 71ca010000   | 	jle Npos_12		# if so, goto Npos:
+  0x1c4: c0f001000000 | 	iaddl $1, %eax		# count++
+  0x1ca:              | Npos_12:	
+  0x1ca: 506330000000 | 	mrmovl 48(%ebx), %esi	# read val from src...
+  0x1d0: c0f2ffffffff | 	iaddl $-1, %edx		# len--
+  0x1d6: 7154030000   | 	jle Done		# if so, goto Loop:
+                      | 
+                      | 
+  0x1db: 406130000000 | 	rmmovl %esi, 48(%ecx)	# ...and store it to dst
+  0x1e1: 6266         | 	andl %esi, %esi		# val <= 0?
+  0x1e3: 71ee010000   | 	jle Npos_13		# if so, goto Npos:
+  0x1e8: c0f001000000 | 	iaddl $1, %eax		# count++
+  0x1ee:              | Npos_13:	
+  0x1ee: 506334000000 | 	mrmovl 52(%ebx), %esi	# read val from src...
+  0x1f4: c0f2ffffffff | 	iaddl $-1, %edx		# len--
+  0x1fa: 7154030000   | 	jle Done		# if so, goto Loop:
+                      | 
+                      | 
+  0x1ff: 406134000000 | 	rmmovl %esi, 52(%ecx)	# ...and store it to dst
+  0x205: 6266         | 	andl %esi, %esi		# val <= 0?
+  0x207: 7112020000   | 	jle Npos_14		# if so, goto Npos:
+  0x20c: c0f001000000 | 	iaddl $1, %eax		# count++
+  0x212:              | Npos_14:	
+  0x212: 506338000000 | 	mrmovl 56(%ebx), %esi	# read val from src...
+  0x218: c0f2ffffffff | 	iaddl $-1, %edx		# len--
+  0x21e: 7154030000   | 	jle Done		# if so, goto Loop:
+                      | 
+                      | 
+  0x223: 406138000000 | 	rmmovl %esi, 56(%ecx)	# ...and store it to dst
+  0x229: 6266         | 	andl %esi, %esi		# val <= 0?
+  0x22b: 7136020000   | 	jle Npos_15		# if so, goto Npos:
+  0x230: c0f001000000 | 	iaddl $1, %eax		# count++
+  0x236:              | Npos_15:	
+  0x236: 50633c000000 | 	mrmovl 60(%ebx), %esi	# read val from src...
+  0x23c: c0f2ffffffff | 	iaddl $-1, %edx		# len--
+  0x242: 7154030000   | 	jle Done		# if so, goto Loop:
+                      | 
+                      | 
+  0x247: 40613c000000 | 	rmmovl %esi, 60(%ecx)	# ...and store it to dst
+  0x24d: 6266         | 	andl %esi, %esi		# val <= 0?
+  0x24f: 715a020000   | 	jle Npos_16		# if so, goto Npos:
+  0x254: c0f001000000 | 	iaddl $1, %eax		# count++
+  0x25a:              | Npos_16:	
+  0x25a: 506340000000 | 	mrmovl 64(%ebx), %esi	# read val from src...
+  0x260: c0f2ffffffff | 	iaddl $-1, %edx		# len--
+  0x266: 7154030000   | 	jle Done		# if so, goto Loop:
+                      | 
+                      | 
+  0x26b: 406140000000 | 	rmmovl %esi, 64(%ecx)	# ...and store it to dst
+  0x271: 6266         | 	andl %esi, %esi		# val <= 0?
+  0x273: 717e020000   | 	jle Npos_17		# if so, goto Npos:
+  0x278: c0f001000000 | 	iaddl $1, %eax		# count++
+  0x27e:              | Npos_17:	
+  0x27e: 506344000000 | 	mrmovl 68(%ebx), %esi	# read val from src...
+  0x284: c0f2ffffffff | 	iaddl $-1, %edx		# len--
+  0x28a: 7154030000   | 	jle Done		# if so, goto Loop:
+                      | 
+                      | 
+  0x28f: 406144000000 | 	rmmovl %esi, 68(%ecx)	# ...and store it to dst
+  0x295: 6266         | 	andl %esi, %esi		# val <= 0?
+  0x297: 71a2020000   | 	jle Npos_18		# if so, goto Npos:
+  0x29c: c0f001000000 | 	iaddl $1, %eax		# count++
+  0x2a2:              | Npos_18:	
+  0x2a2: 506348000000 | 	mrmovl 72(%ebx), %esi	# read val from src...
+  0x2a8: c0f2ffffffff | 	iaddl $-1, %edx		# len--
+  0x2ae: 7154030000   | 	jle Done		# if so, goto Loop:
+                      | 
+                      | 
+  0x2b3: 406148000000 | 	rmmovl %esi, 72(%ecx)	# ...and store it to dst
+  0x2b9: 6266         | 	andl %esi, %esi		# val <= 0?
+  0x2bb: 71c6020000   | 	jle Npos_19		# if so, goto Npos:
+  0x2c0: c0f001000000 | 	iaddl $1, %eax		# count++
+  0x2c6:              | Npos_19:	
+  0x2c6: 50634c000000 | 	mrmovl 76(%ebx), %esi	# read val from src...
+  0x2cc: c0f2ffffffff | 	iaddl $-1, %edx		# len--
+  0x2d2: 7154030000   | 	jle Done		# if so, goto Loop:
+                      | 
+                      | 
+  0x2d7: 40614c000000 | 	rmmovl %esi, 76(%ecx)	# ...and store it to dst
+  0x2dd: 6266         | 	andl %esi, %esi		# val <= 0?
+  0x2df: 71ea020000   | 	jle Npos_20		# if so, goto Npos:
+  0x2e4: c0f001000000 | 	iaddl $1, %eax		# count++
+  0x2ea:              | Npos_20:	
+  0x2ea: 506350000000 | 	mrmovl 80(%ebx), %esi	# read val from src...
+  0x2f0: c0f2ffffffff | 	iaddl $-1, %edx		# len--
+  0x2f6: 7154030000   | 	jle Done		# if so, goto Loop:
+                      | 
+                      | 
+  0x2fb: 406150000000 | 	rmmovl %esi, 80(%ecx)	# ...and store it to dst
+  0x301: 6266         | 	andl %esi, %esi		# val <= 0?
+  0x303: 710e030000   | 	jle Npos_21		# if so, goto Npos:
+  0x308: c0f001000000 | 	iaddl $1, %eax		# count++
+  0x30e:              | Npos_21:	
+  0x30e: 506354000000 | 	mrmovl 84(%ebx), %esi	# read val from src...
+  0x314: c0f2ffffffff | 	iaddl $-1, %edx		# len--
+  0x31a: 7154030000   | 	jle Done		# if so, goto Loop:
+                      | 
+                      | 
+  0x31f: 406154000000 | 	rmmovl %esi, 84(%ecx)	# ...and store it to dst
+  0x325: 6266         | 	andl %esi, %esi		# val <= 0?
+  0x327: 7132030000   | 	jle Npos_22		# if so, goto Npos:
+  0x32c: c0f001000000 | 	iaddl $1, %eax		# count++
+  0x332:              | Npos_22:	
+  0x332: 506358000000 | 	mrmovl 88(%ebx), %esi	# read val from src...
+  0x338: c0f2ffffffff | 	iaddl $-1, %edx		# len--
+  0x33e: 7154030000   | 	jle Done		# if so, goto Loop:
+                      | 
+  0x343: c0f358000000 | 	iaddl $88, %ebx
+  0x349: c0f158000000 | 	iaddl $88, %ecx
+  0x34f: 702b000000   | 	jmp Loop
+                      | 
+                      | 
+                      | ##################################################################
+                      | # Do not modify the following section of code
+                      | # Function epilogue.
+  0x354:              | Done:
+  0x354: b07f         | 	popl %edi               # Restore callee-save registers
+  0x356: b03f         | 	popl %ebx
+  0x358: b06f         | 	popl %esi
+  0x35a: 2054         | 	rrmovl %ebp, %esp
+  0x35c: b05f         | 	popl %ebp
+  0x35e: 90           | 	ret
+                      | ##################################################################
+                      | # Keep the following label at the end of your function
+  0x35f:              | End:
+                      | #/* $end ncopy-ys */
