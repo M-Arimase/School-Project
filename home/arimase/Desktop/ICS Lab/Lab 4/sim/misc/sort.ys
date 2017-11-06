@@ -1,0 +1,124 @@
+	.pos 0
+init:	irmovl Stack, %esp
+	irmovl Stack, %ebp
+	call Main
+	halt	
+
+	.align 4
+Array:
+	.long 0x0004
+	.long 0x0003
+	.long 0x0002
+	.long 0x0001
+	.long 0x0008
+	.long 0x0007
+	.long 0x0006
+	.long 0x0005
+
+Main:	pushl %ebp	
+	rrmovl %esp, %ebp
+
+	irmovl Array, %edi
+	irmovl $8, %esi
+	call Bubble_a
+
+	irmovl Array, %edi
+	irmovl $8, %esi
+	call Test_a
+
+	rrmovl %ebp, %esp
+	popl %ebp
+	ret
+
+Bubble_a:
+	pushl %ebp
+	rrmovl %esp, %ebp
+
+	irmovl $4, %ebx
+	addl %esi, %esi
+	addl %esi, %esi
+	addl %edi, %esi
+	subl %ebx, %esi
+
+	jmp Bubble_Label_1
+
+Bubble_Label_5:
+	irmovl $4, %ebx
+	addl %ebx, %eax
+
+Bubble_Label_3:
+	rrmovl %eax, %ebx
+	subl %esi, %ebx
+	jge Bubble_Label_4
+
+	mrmovl $4(%eax), %edx
+	mrmovl (%eax), %ecx
+
+	rrmovl %edx, %ebx
+	subl %ecx, %ebx
+	jge Bubble_Label_5
+
+	rmmovl %ecx, $4(%eax)
+	rmmovl %edx, (%eax)
+	jmp Bubble_Label_5
+
+Bubble_Label_4:
+	irmovl $4, %ebx
+	subl %ebx, %esi
+
+Bubble_Label_1:
+	rrmovl %esi, %ebx
+	subl %edi, %ebx
+	jle Bubble_Label_2
+
+	rrmovl %edi, %eax
+	jmp Bubble_Label_3
+	
+Bubble_Label_2:
+	rrmovl %ebp, %esp
+	popl %ebp
+	ret
+
+Test_a:
+	pushl %ebp
+	rrmovl %esp, %ebp
+
+	rrmovl %edi, %eax
+
+	irmovl $4, %ebx
+	addl %esi, %esi
+	addl %esi, %esi
+	addl %edi, %esi
+	subl %ebx, %esi
+
+Test_Label_4:
+	rrmovl %esi, %ebx
+	subl %eax, %ebx
+	jle Test_Label_1
+
+	mrmovl $4(%eax), %edx
+	mrmovl (%eax), %ecx
+
+	rrmovl %edx, %ebx
+	subl %ecx, %ebx
+	jl Test_Label_3
+
+	irmovl $4, %ebx
+	addl %ebx, %eax
+	jmp Test_Label_4
+
+Test_Label_1:
+	irmovl $1, %eax
+	jmp Test_Label_2
+
+Test_Label_3:
+	irmovl $0, %eax
+	jmp Test_Label_2
+
+Test_Label_2:
+	rrmovl %ebp, %esp
+	popl %ebp
+	ret
+
+	.pos 0x1000
+Stack:

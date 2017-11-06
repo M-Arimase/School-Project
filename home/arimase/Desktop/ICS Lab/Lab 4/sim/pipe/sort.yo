@@ -1,0 +1,124 @@
+  0x000:              | 	.pos 0
+  0x000: 30f400100000 | init:	irmovl Stack, %esp
+  0x006: 30f500100000 | 	irmovl Stack, %ebp
+  0x00c: 8034000000   | 	call Main
+  0x011: 00           | 	halt	
+                      | 
+  0x014:              | 	.align 4
+  0x014:              | Array:
+  0x014: 04000000     | 	.long 0x0004
+  0x018: 03000000     | 	.long 0x0003
+  0x01c: 02000000     | 	.long 0x0002
+  0x020: 01000000     | 	.long 0x0001
+  0x024: 08000000     | 	.long 0x0008
+  0x028: 07000000     | 	.long 0x0007
+  0x02c: 06000000     | 	.long 0x0006
+  0x030: 05000000     | 	.long 0x0005
+                      | 
+  0x034: a05f         | Main:	pushl %ebp	
+  0x036: 2045         | 	rrmovl %esp, %ebp
+                      | 
+  0x038: 30f714000000 | 	irmovl Array, %edi
+  0x03e: 30f608000000 | 	irmovl $8, %esi
+  0x044: 805f000000   | 	call Bubble_a
+                      | 
+  0x049: 30f714000000 | 	irmovl Array, %edi
+  0x04f: 30f608000000 | 	irmovl $8, %esi
+  0x055: 80ca000000   | 	call Test_a
+                      | 
+  0x05a: 2054         | 	rrmovl %ebp, %esp
+  0x05c: b05f         | 	popl %ebp
+  0x05e: 90           | 	ret
+                      | 
+  0x05f:              | Bubble_a:
+  0x05f: a05f         | 	pushl %ebp
+  0x061: 2045         | 	rrmovl %esp, %ebp
+                      | 
+  0x063: 30f304000000 | 	irmovl $4, %ebx
+  0x069: 6066         | 	addl %esi, %esi
+  0x06b: 6066         | 	addl %esi, %esi
+  0x06d: 6076         | 	addl %edi, %esi
+  0x06f: 6136         | 	subl %ebx, %esi
+                      | 
+  0x071: 70b5000000   | 	jmp Bubble_Label_1
+                      | 
+  0x076:              | Bubble_Label_5:
+  0x076: 30f304000000 | 	irmovl $4, %ebx
+  0x07c: 6030         | 	addl %ebx, %eax
+                      | 
+  0x07e:              | Bubble_Label_3:
+  0x07e: 2003         | 	rrmovl %eax, %ebx
+  0x080: 6163         | 	subl %esi, %ebx
+  0x082: 75ad000000   | 	jge Bubble_Label_4
+                      | 
+  0x087: 502004000000 | 	mrmovl $4(%eax), %edx
+  0x08d: 501000000000 | 	mrmovl (%eax), %ecx
+                      | 
+  0x093: 2023         | 	rrmovl %edx, %ebx
+  0x095: 6113         | 	subl %ecx, %ebx
+  0x097: 7576000000   | 	jge Bubble_Label_5
+                      | 
+  0x09c: 401004000000 | 	rmmovl %ecx, $4(%eax)
+  0x0a2: 402000000000 | 	rmmovl %edx, (%eax)
+  0x0a8: 7076000000   | 	jmp Bubble_Label_5
+                      | 
+  0x0ad:              | Bubble_Label_4:
+  0x0ad: 30f304000000 | 	irmovl $4, %ebx
+  0x0b3: 6136         | 	subl %ebx, %esi
+                      | 
+  0x0b5:              | Bubble_Label_1:
+  0x0b5: 2063         | 	rrmovl %esi, %ebx
+  0x0b7: 6173         | 	subl %edi, %ebx
+  0x0b9: 71c5000000   | 	jle Bubble_Label_2
+                      | 
+  0x0be: 2070         | 	rrmovl %edi, %eax
+  0x0c0: 707e000000   | 	jmp Bubble_Label_3
+                      | 	
+  0x0c5:              | Bubble_Label_2:
+  0x0c5: 2054         | 	rrmovl %ebp, %esp
+  0x0c7: b05f         | 	popl %ebp
+  0x0c9: 90           | 	ret
+                      | 
+  0x0ca:              | Test_a:
+  0x0ca: a05f         | 	pushl %ebp
+  0x0cc: 2045         | 	rrmovl %esp, %ebp
+                      | 
+  0x0ce: 2070         | 	rrmovl %edi, %eax
+                      | 
+  0x0d0: 30f304000000 | 	irmovl $4, %ebx
+  0x0d6: 6066         | 	addl %esi, %esi
+  0x0d8: 6066         | 	addl %esi, %esi
+  0x0da: 6076         | 	addl %edi, %esi
+  0x0dc: 6136         | 	subl %ebx, %esi
+                      | 
+  0x0de:              | Test_Label_4:
+  0x0de: 2063         | 	rrmovl %esi, %ebx
+  0x0e0: 6103         | 	subl %eax, %ebx
+  0x0e2: 7109010000   | 	jle Test_Label_1
+                      | 
+  0x0e7: 502004000000 | 	mrmovl $4(%eax), %edx
+  0x0ed: 501000000000 | 	mrmovl (%eax), %ecx
+                      | 
+  0x0f3: 2023         | 	rrmovl %edx, %ebx
+  0x0f5: 6113         | 	subl %ecx, %ebx
+  0x0f7: 7214010000   | 	jl Test_Label_3
+                      | 
+  0x0fc: 30f304000000 | 	irmovl $4, %ebx
+  0x102: 6030         | 	addl %ebx, %eax
+  0x104: 70de000000   | 	jmp Test_Label_4
+                      | 
+  0x109:              | Test_Label_1:
+  0x109: 30f001000000 | 	irmovl $1, %eax
+  0x10f: 701f010000   | 	jmp Test_Label_2
+                      | 
+  0x114:              | Test_Label_3:
+  0x114: 30f000000000 | 	irmovl $0, %eax
+  0x11a: 701f010000   | 	jmp Test_Label_2
+                      | 
+  0x11f:              | Test_Label_2:
+  0x11f: 2054         | 	rrmovl %ebp, %esp
+  0x121: b05f         | 	popl %ebp
+  0x123: 90           | 	ret
+                      | 
+  0x000:              | 	.pos 0x1000
+  0x000:              | Stack:

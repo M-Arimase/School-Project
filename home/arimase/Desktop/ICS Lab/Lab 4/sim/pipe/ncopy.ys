@@ -1,0 +1,181 @@
+#/* $begin ncopy-ys */
+##################################################################
+# ncopy.ys - Copy a src block of len ints to dst.
+# Return the number of positive ints (>0) contained in src.
+#
+# Include your name and ID here.
+#
+# 赵义凯 1600013015
+# 
+# 使用了iaddl更快的实现加法
+# 使用了8x1循环展开，同时通过调整顺序让流水线不因数据依赖暂停
+# 使用条件传送代替条件转移
+# 
+# Describe how and why you modified the baseline code.
+#
+##################################################################
+# Do not modify this portion
+# Function prologue.
+ncopy:	pushl %ebp		# Save old frame pointer
+	rrmovl %esp,%ebp	# Set up new frame pointer
+	pushl %esi		# Save callee-save regs
+	pushl %ebx
+	pushl %edi
+	mrmovl 8(%ebp),%ebx	# src
+	mrmovl 16(%ebp),%edx	# len
+	mrmovl 12(%ebp),%ecx	# dst
+
+##################################################################
+# You can modify this portion
+	# Loop header
+	xorl %eax,%eax		# count = 0;
+
+	andl %edx,%edx		# len <= 0?
+	jle Done		# if so, goto Done:
+
+Loop_0:	
+	iaddl $-8, %edx
+	jl Remain
+
+	mrmovl (%ebx), %esi	# read val from src...
+	rrmovl %eax, %edi
+	rmmovl %esi, (%ecx)	# ...and store it to dst
+	iaddl $1, %edi
+	andl %esi, %esi		# val <= 0?
+	cmovg %edi, %eax
+
+	mrmovl 4(%ebx), %esi	# read val from src...
+	rrmovl %eax, %edi
+	rmmovl %esi, 4(%ecx)	# ...and store it to dst
+	iaddl $1, %edi
+	andl %esi, %esi		# val <= 0?
+	cmovg %edi, %eax
+
+	mrmovl 8(%ebx), %esi	# read val from src...
+	rrmovl %eax, %edi
+	rmmovl %esi, 8(%ecx)	# ...and store it to dst
+	iaddl $1, %edi
+	andl %esi, %esi		# val <= 0?
+	cmovg %edi, %eax
+
+	mrmovl 12(%ebx), %esi	# read val from src...
+	rrmovl %eax, %edi
+	rmmovl %esi, 12(%ecx)	# ...and store it to dst
+	iaddl $1, %edi
+	andl %esi, %esi		# val <= 0?
+	cmovg %edi, %eax
+
+	mrmovl 16(%ebx), %esi	# read val from src...
+	rrmovl %eax, %edi
+	rmmovl %esi, 16(%ecx)	# ...and store it to dst
+	iaddl $1, %edi
+	andl %esi, %esi		# val <= 0?
+	cmovg %edi, %eax
+
+	mrmovl 20(%ebx), %esi	# read val from src...
+	rrmovl %eax, %edi
+	rmmovl %esi, 20(%ecx)	# ...and store it to dst
+	iaddl $1, %edi
+	andl %esi, %esi		# val <= 0?
+	cmovg %edi, %eax
+
+	mrmovl 24(%ebx), %esi	# read val from src...
+	rrmovl %eax, %edi
+	rmmovl %esi, 24(%ecx)	# ...and store it to dst
+	iaddl $1, %edi
+	andl %esi, %esi		# val <= 0?
+	cmovg %edi, %eax
+
+	mrmovl 28(%ebx), %esi	# read val from src...
+	rrmovl %eax, %edi
+	rmmovl %esi, 28(%ecx)	# ...and store it to dst
+	iaddl $1, %edi
+	andl %esi, %esi		# val <= 0?
+	cmovg %edi, %eax
+
+	iaddl $32, %ecx
+	iaddl $32, %ebx
+
+	jmp Loop_0
+
+Remain:
+	iaddl $8, %edx
+	jle Done		# if so, goto Done:
+
+	mrmovl (%ebx), %esi	# read val from src...
+	rrmovl %eax, %edi
+	rmmovl %esi, (%ecx)	# ...and store it to dst
+	iaddl $1, %edi
+	andl %esi, %esi		# val <= 0?
+	cmovg %edi, %eax
+	iaddl $-1, %edx
+	jle Done
+
+	mrmovl 4(%ebx), %esi	# read val from src...
+	rrmovl %eax, %edi
+	rmmovl %esi, 4(%ecx)	# ...and store it to dst
+	iaddl $1, %edi
+	andl %esi, %esi		# val <= 0?
+	cmovg %edi, %eax
+	iaddl $-1, %edx
+	jle Done
+
+	mrmovl 8(%ebx), %esi	# read val from src...
+	rrmovl %eax, %edi
+	rmmovl %esi, 8(%ecx)	# ...and store it to dst
+	iaddl $1, %edi
+	andl %esi, %esi		# val <= 0?
+	cmovg %edi, %eax
+	iaddl $-1, %edx
+	jle Done
+
+	mrmovl 12(%ebx), %esi	# read val from src...
+	rrmovl %eax, %edi
+	rmmovl %esi, 12(%ecx)	# ...and store it to dst
+	iaddl $1, %edi
+	andl %esi, %esi		# val <= 0?
+	cmovg %edi, %eax
+	iaddl $-1, %edx
+	jle Done
+
+	mrmovl 16(%ebx), %esi	# read val from src...
+	rrmovl %eax, %edi
+	rmmovl %esi, 16(%ecx)	# ...and store it to dst
+	iaddl $1, %edi
+	andl %esi, %esi		# val <= 0?
+	cmovg %edi, %eax
+	iaddl $-1, %edx
+	jle Done
+
+	mrmovl 20(%ebx), %esi	# read val from src...
+	rrmovl %eax, %edi
+	rmmovl %esi, 20(%ecx)	# ...and store it to dst
+	iaddl $1, %edi
+	andl %esi, %esi		# val <= 0?
+	cmovg %edi, %eax
+	iaddl $-1, %edx
+	jle Done
+
+	mrmovl 24(%ebx), %esi	# read val from src...
+	rrmovl %eax, %edi
+	rmmovl %esi, 24(%ecx)	# ...and store it to dst
+	iaddl $1, %edi
+	andl %esi, %esi		# val <= 0?
+	cmovg %edi, %eax
+	iaddl $-1, %edx
+	jle Done
+
+##################################################################
+# Do not modify the following section of code
+# Function epilogue.
+Done:
+	popl %edi               # Restore callee-save registers
+	popl %ebx
+	popl %esi
+
+	leave
+	ret
+##################################################################
+# Keep the following label at the end of your function
+End:
+#/* $end ncopy-ys */

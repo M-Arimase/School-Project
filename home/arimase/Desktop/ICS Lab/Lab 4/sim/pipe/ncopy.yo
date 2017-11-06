@@ -1,0 +1,239 @@
+                      | #/* $begin ncopy-ys */
+                      | ##################################################################
+                      | # ncopy.ys - Copy a src block of len ints to dst.
+                      | # Return the number of positive ints (>0) contained in src.
+                      | #
+                      | # Include your name and ID here.
+                      | #
+                      | # Describe how and why you modified the baseline code.
+                      | #
+                      | ##################################################################
+                      | # Do not modify this portion
+                      | # Function prologue.
+  0x000: a05f         | ncopy:	pushl %ebp		# Save old frame pointer
+  0x002: 2045         | 	rrmovl %esp,%ebp	# Set up new frame pointer
+  0x004: a06f         | 	pushl %esi		# Save callee-save regs
+  0x006: a03f         | 	pushl %ebx
+  0x008: a07f         | 	pushl %edi
+  0x00a: 503508000000 | 	mrmovl 8(%ebp),%ebx	# src
+  0x010: 502510000000 | 	mrmovl 16(%ebp),%edx	# len
+  0x016: 50150c000000 | 	mrmovl 12(%ebp),%ecx	# dst
+                      | 
+                      | ##################################################################
+                      | # You can modify this portion
+                      | 	# Loop header
+  0x01c: 6300         | 	xorl %eax,%eax		# count = 0;
+                      | 
+  0x01e: 6222         | 	andl %edx,%edx		# len <= 0?
+  0x020: 71ed020000   | 	jle Done		# if so, goto Done:
+                      | 
+  0x025:              | Loop_0:	
+  0x025: c0f2f4ffffff | 	iaddl $-12, %edx
+  0x02b: 7261010000   | 	jl Remain
+                      | 
+  0x030: 506300000000 | 	mrmovl (%ebx), %esi	# read val from src...
+  0x036: 2007         | 	rrmovl %eax, %edi
+  0x038: 406100000000 | 	rmmovl %esi, (%ecx)	# ...and store it to dst
+  0x03e: c0f701000000 | 	iaddl $1, %edi
+  0x044: 6266         | 	andl %esi, %esi		# val <= 0?
+  0x046: 2670         | 	cmovg %edi, %eax
+                      | 
+  0x048: 506304000000 | 	mrmovl 4(%ebx), %esi	# read val from src...
+  0x04e: 2007         | 	rrmovl %eax, %edi
+  0x050: 406104000000 | 	rmmovl %esi, 4(%ecx)	# ...and store it to dst
+  0x056: c0f701000000 | 	iaddl $1, %edi
+  0x05c: 6266         | 	andl %esi, %esi		# val <= 0?
+  0x05e: 2670         | 	cmovg %edi, %eax
+                      | 
+  0x060: 506308000000 | 	mrmovl 8(%ebx), %esi	# read val from src...
+  0x066: 2007         | 	rrmovl %eax, %edi
+  0x068: 406108000000 | 	rmmovl %esi, 8(%ecx)	# ...and store it to dst
+  0x06e: c0f701000000 | 	iaddl $1, %edi
+  0x074: 6266         | 	andl %esi, %esi		# val <= 0?
+  0x076: 2670         | 	cmovg %edi, %eax
+                      | 
+  0x078: 50630c000000 | 	mrmovl 12(%ebx), %esi	# read val from src...
+  0x07e: 2007         | 	rrmovl %eax, %edi
+  0x080: 40610c000000 | 	rmmovl %esi, 12(%ecx)	# ...and store it to dst
+  0x086: c0f701000000 | 	iaddl $1, %edi
+  0x08c: 6266         | 	andl %esi, %esi		# val <= 0?
+  0x08e: 2670         | 	cmovg %edi, %eax
+                      | 
+  0x090: 506310000000 | 	mrmovl 16(%ebx), %esi	# read val from src...
+  0x096: 2007         | 	rrmovl %eax, %edi
+  0x098: 406110000000 | 	rmmovl %esi, 16(%ecx)	# ...and store it to dst
+  0x09e: c0f701000000 | 	iaddl $1, %edi
+  0x0a4: 6266         | 	andl %esi, %esi		# val <= 0?
+  0x0a6: 2670         | 	cmovg %edi, %eax
+                      | 
+  0x0a8: 506314000000 | 	mrmovl 20(%ebx), %esi	# read val from src...
+  0x0ae: 2007         | 	rrmovl %eax, %edi
+  0x0b0: 406114000000 | 	rmmovl %esi, 20(%ecx)	# ...and store it to dst
+  0x0b6: c0f701000000 | 	iaddl $1, %edi
+  0x0bc: 6266         | 	andl %esi, %esi		# val <= 0?
+  0x0be: 2670         | 	cmovg %edi, %eax
+                      | 
+  0x0c0: 506318000000 | 	mrmovl 24(%ebx), %esi	# read val from src...
+  0x0c6: 2007         | 	rrmovl %eax, %edi
+  0x0c8: 406118000000 | 	rmmovl %esi, 24(%ecx)	# ...and store it to dst
+  0x0ce: c0f701000000 | 	iaddl $1, %edi
+  0x0d4: 6266         | 	andl %esi, %esi		# val <= 0?
+  0x0d6: 2670         | 	cmovg %edi, %eax
+                      | 
+  0x0d8: 50631c000000 | 	mrmovl 28(%ebx), %esi	# read val from src...
+  0x0de: 2007         | 	rrmovl %eax, %edi
+  0x0e0: 40611c000000 | 	rmmovl %esi, 28(%ecx)	# ...and store it to dst
+  0x0e6: c0f701000000 | 	iaddl $1, %edi
+  0x0ec: 6266         | 	andl %esi, %esi		# val <= 0?
+  0x0ee: 2670         | 	cmovg %edi, %eax
+                      | 
+  0x0f0: 506320000000 | 	mrmovl 32(%ebx), %esi	# read val from src...
+  0x0f6: 2007         | 	rrmovl %eax, %edi
+  0x0f8: 406120000000 | 	rmmovl %esi, 32(%ecx)	# ...and store it to dst
+  0x0fe: c0f701000000 | 	iaddl $1, %edi
+  0x104: 6266         | 	andl %esi, %esi		# val <= 0?
+  0x106: 2670         | 	cmovg %edi, %eax
+                      | 
+  0x108: 506324000000 | 	mrmovl 36(%ebx), %esi	# read val from src...
+  0x10e: 2007         | 	rrmovl %eax, %edi
+  0x110: 406124000000 | 	rmmovl %esi, 36(%ecx)	# ...and store it to dst
+  0x116: c0f701000000 | 	iaddl $1, %edi
+  0x11c: 6266         | 	andl %esi, %esi		# val <= 0?
+  0x11e: 2670         | 	cmovg %edi, %eax
+                      | 
+  0x120: 506328000000 | 	mrmovl 40(%ebx), %esi	# read val from src...
+  0x126: 2007         | 	rrmovl %eax, %edi
+  0x128: 406128000000 | 	rmmovl %esi, 40(%ecx)	# ...and store it to dst
+  0x12e: c0f701000000 | 	iaddl $1, %edi
+  0x134: 6266         | 	andl %esi, %esi		# val <= 0?
+  0x136: 2670         | 	cmovg %edi, %eax
+                      | 
+  0x138: 50632c000000 | 	mrmovl 44(%ebx), %esi	# read val from src...
+  0x13e: 2007         | 	rrmovl %eax, %edi
+  0x140: 40612c000000 | 	rmmovl %esi, 44(%ecx)	# ...and store it to dst
+  0x146: c0f701000000 | 	iaddl $1, %edi
+  0x14c: 6266         | 	andl %esi, %esi		# val <= 0?
+  0x14e: 2670         | 	cmovg %edi, %eax
+                      | 
+  0x150: c0f130000000 | 	iaddl $48, %ecx
+  0x156: c0f330000000 | 	iaddl $48, %ebx
+                      | 
+  0x15c: 7025000000   | 	jmp Loop_0
+                      | 
+  0x161:              | Remain:
+  0x161: c0f20c000000 | 	iaddl $12, %edx
+  0x167: 71ed020000   | 	jle Done		# if so, goto Done:
+                      | 
+  0x16c: 506300000000 | 	mrmovl (%ebx), %esi	# read val from src...
+  0x172: 2007         | 	rrmovl %eax, %edi
+  0x174: 406100000000 | 	rmmovl %esi, (%ecx)	# ...and store it to dst
+  0x17a: c0f701000000 | 	iaddl $1, %edi
+  0x180: 6266         | 	andl %esi, %esi		# val <= 0?
+  0x182: 2670         | 	cmovg %edi, %eax
+  0x184: c0f2ffffffff | 	iaddl $-1, %edx
+  0x18a: 71ed020000   | 	jle Done
+                      | 
+  0x18f: 506304000000 | 	mrmovl 4(%ebx), %esi	# read val from src...
+  0x195: 2007         | 	rrmovl %eax, %edi
+  0x197: 406104000000 | 	rmmovl %esi, 4(%ecx)	# ...and store it to dst
+  0x19d: c0f701000000 | 	iaddl $1, %edi
+  0x1a3: 6266         | 	andl %esi, %esi		# val <= 0?
+  0x1a5: 2670         | 	cmovg %edi, %eax
+  0x1a7: c0f2ffffffff | 	iaddl $-1, %edx
+  0x1ad: 71ed020000   | 	jle Done
+                      | 
+  0x1b2: 506308000000 | 	mrmovl 8(%ebx), %esi	# read val from src...
+  0x1b8: 2007         | 	rrmovl %eax, %edi
+  0x1ba: 406108000000 | 	rmmovl %esi, 8(%ecx)	# ...and store it to dst
+  0x1c0: c0f701000000 | 	iaddl $1, %edi
+  0x1c6: 6266         | 	andl %esi, %esi		# val <= 0?
+  0x1c8: 2670         | 	cmovg %edi, %eax
+  0x1ca: c0f2ffffffff | 	iaddl $-1, %edx
+  0x1d0: 71ed020000   | 	jle Done
+                      | 
+  0x1d5: 50630c000000 | 	mrmovl 12(%ebx), %esi	# read val from src...
+  0x1db: 2007         | 	rrmovl %eax, %edi
+  0x1dd: 40610c000000 | 	rmmovl %esi, 12(%ecx)	# ...and store it to dst
+  0x1e3: c0f701000000 | 	iaddl $1, %edi
+  0x1e9: 6266         | 	andl %esi, %esi		# val <= 0?
+  0x1eb: 2670         | 	cmovg %edi, %eax
+  0x1ed: c0f2ffffffff | 	iaddl $-1, %edx
+  0x1f3: 71ed020000   | 	jle Done
+                      | 
+  0x1f8: 506310000000 | 	mrmovl 16(%ebx), %esi	# read val from src...
+  0x1fe: 2007         | 	rrmovl %eax, %edi
+  0x200: 406110000000 | 	rmmovl %esi, 16(%ecx)	# ...and store it to dst
+  0x206: c0f701000000 | 	iaddl $1, %edi
+  0x20c: 6266         | 	andl %esi, %esi		# val <= 0?
+  0x20e: 2670         | 	cmovg %edi, %eax
+  0x210: c0f2ffffffff | 	iaddl $-1, %edx
+  0x216: 71ed020000   | 	jle Done
+                      | 
+  0x21b: 506314000000 | 	mrmovl 20(%ebx), %esi	# read val from src...
+  0x221: 2007         | 	rrmovl %eax, %edi
+  0x223: 406114000000 | 	rmmovl %esi, 20(%ecx)	# ...and store it to dst
+  0x229: c0f701000000 | 	iaddl $1, %edi
+  0x22f: 6266         | 	andl %esi, %esi		# val <= 0?
+  0x231: 2670         | 	cmovg %edi, %eax
+  0x233: c0f2ffffffff | 	iaddl $-1, %edx
+  0x239: 71ed020000   | 	jle Done
+                      | 
+  0x23e: 506318000000 | 	mrmovl 24(%ebx), %esi	# read val from src...
+  0x244: 2007         | 	rrmovl %eax, %edi
+  0x246: 406118000000 | 	rmmovl %esi, 24(%ecx)	# ...and store it to dst
+  0x24c: c0f701000000 | 	iaddl $1, %edi
+  0x252: 6266         | 	andl %esi, %esi		# val <= 0?
+  0x254: 2670         | 	cmovg %edi, %eax
+  0x256: c0f2ffffffff | 	iaddl $-1, %edx
+  0x25c: 71ed020000   | 	jle Done
+                      | 
+  0x261: 50631c000000 | 	mrmovl 28(%ebx), %esi	# read val from src...
+  0x267: 2007         | 	rrmovl %eax, %edi
+  0x269: 40611c000000 | 	rmmovl %esi, 28(%ecx)	# ...and store it to dst
+  0x26f: c0f701000000 | 	iaddl $1, %edi
+  0x275: 6266         | 	andl %esi, %esi		# val <= 0?
+  0x277: 2670         | 	cmovg %edi, %eax
+  0x279: c0f2ffffffff | 	iaddl $-1, %edx
+  0x27f: 71ed020000   | 	jle Done
+                      | 
+  0x284: 506320000000 | 	mrmovl 32(%ebx), %esi	# read val from src...
+  0x28a: 2007         | 	rrmovl %eax, %edi
+  0x28c: 406120000000 | 	rmmovl %esi, 32(%ecx)	# ...and store it to dst
+  0x292: c0f701000000 | 	iaddl $1, %edi
+  0x298: 6266         | 	andl %esi, %esi		# val <= 0?
+  0x29a: 2670         | 	cmovg %edi, %eax
+  0x29c: c0f2ffffffff | 	iaddl $-1, %edx
+  0x2a2: 71ed020000   | 	jle Done
+                      | 
+  0x2a7: 506324000000 | 	mrmovl 36(%ebx), %esi	# read val from src...
+  0x2ad: 2007         | 	rrmovl %eax, %edi
+  0x2af: 406124000000 | 	rmmovl %esi, 36(%ecx)	# ...and store it to dst
+  0x2b5: c0f701000000 | 	iaddl $1, %edi
+  0x2bb: 6266         | 	andl %esi, %esi		# val <= 0?
+  0x2bd: 2670         | 	cmovg %edi, %eax
+  0x2bf: c0f2ffffffff | 	iaddl $-1, %edx
+  0x2c5: 71ed020000   | 	jle Done
+                      | 
+  0x2ca: 506328000000 | 	mrmovl 40(%ebx), %esi	# read val from src...
+  0x2d0: 2007         | 	rrmovl %eax, %edi
+  0x2d2: 406128000000 | 	rmmovl %esi, 40(%ecx)	# ...and store it to dst
+  0x2d8: c0f701000000 | 	iaddl $1, %edi
+  0x2de: 6266         | 	andl %esi, %esi		# val <= 0?
+  0x2e0: 2670         | 	cmovg %edi, %eax
+  0x2e2: c0f2ffffffff | 	iaddl $-1, %edx
+  0x2e8: 71ed020000   | 	jle Done
+                      | 
+                      | ##################################################################
+                      | # Do not modify the following section of code
+                      | # Function epilogue.
+  0x2ed:              | Done:
+  0x2ed: b07f         | 	popl %edi               # Restore callee-save registers
+  0x2ef: b03f         | 	popl %ebx
+  0x2f1: b06f         | 	popl %esi
+                      | 
+  0x2f3: d0           | 	leave
+  0x2f4: 90           | 	ret
+                      | ##################################################################
+                      | # Keep the following label at the end of your function
+  0x2f5:              | End:
+                      | #/* $end ncopy-ys */
